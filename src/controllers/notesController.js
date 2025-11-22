@@ -1,6 +1,12 @@
-export function getNotes(req, res) {
-    console.log('Received a request at /api/note');
-    res.status(200).json({message: 'Hello 123from the backend!, and contreller'}); 
+import express from 'express';
+import Note from '../models/Notes.js';
+export async function getNotes(req, res) {
+    try {
+        const notes = await Note.find();
+        res.status(200).json(notes);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching notes', error });
+    }
 }
 
 export function createNote(req, res) {
